@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Proyecto final: 'Crear una aplicacion para domotica'</title>
+</head>
+<body>
+    <header>
+        <h1>Proyecto final de curso bootcamp full stack</h1>
+        <h2>Presentación</h2>
+        <p>
+            Muy buenas a todos, soy Sergio un estudiante de desarrollo de aplicaciones web (DAW) en formato bootcamp. Estamos en la recta final el curso, apenas nos quedan 2 semanas por lo que es hora de empezar
+            el proyecto final. Mi proyecto lo quiero hacer sobre domótica, creo que es un buen tema y además, me brinda la oportunidad de ayudar a otros, que como yo, llevamos años estudiando
+            'gratis' gracias a internet.
+        </P>
+        <P>
+            El objetivo va a ser hacer una aplicacion completa (front-end y back-end) para el control de dispositivos.
+            Para este tutorial, utilizare como ejemplo un ESP8266 E12 y una OrangePI Lite, mas que nada, porque su conectividad es por wifi y ofrece una versatibilidad brutal!
+            Este proyecto es adaptable a cualquier otro hardware tipo Arduino, RaspberryPI, etc...
+        </p>
+        <p>
+
+        <h2>Requisitos</h2>
+        <p>
+            A continuación detallo el listado de componentes que voy a utilizar, debeis tener especial cuidado con la SD card por la incompatibilidad que puede tener con el modelo de mini pc que elijais
+            y con el relee que debe de ser de 3,3 voltios.
+        </p>
+        <ul>
+            <li>Orange PI Lite</li>
+            <li>SD card sandisk ultra 16gb clase 10</li>
+            <li>ESP8266 e12 nodemcu</li>
+            <li>Protoboard con interruptores y leds</li>
+            <li>Relee 3.3v</li>
+            <li>Interfaz USB to TTY ch340</li>
+        </ul>
+    </header>
+    
+
+    <section>
+        <article>
+            <h2>Preparacion del entorno</h2>
+            <p>
+                En esta sección, configuraremos el PC con las herramientas necesarias para la programación del ESP y OrangePI, yo utilizare un entorno linux (i love linux) pero se puede utilizar windows sin problema
+            </p>
+            <p>
+                Antes de empezar, quiero exponer un pequeño diagrama que nos va a enseñar el rol que va a adquirir cada dispositivo y como se van a comunicar.<br/>
+                La Orange PI hará de servidor (cerebro) la cual establecera comunicación hacia los diferentes ESP (musculos¿?) que tengamos conectados, y también a un router o switch que tenga acceso a internet.
+                Es cada ESP se conectaran los diferentes dispositivos.<br/>
+                Debido al tiempo que tengo para hacer el proyecto, me limitare a conectar unicamente interruptores y releés. En el releé se puede conecar cualquier cosa, desde una luz o enchufe a una calefacción,
+                una cafetera... En definitiva, se puede 'domotizar' cualquier cosa ::guiño.<br/>
+            </p>
+            <img src="./assets/diagramRolDev.png" alt="" style='width:60%; height:auto;'>
+        </article>
+
+        <article>
+            <h2>Orange PI Lite</h2>
+            <p>
+                Ahora vamos a conocer al 'cerebro', el modelo que he elegido es Orange PI Lite, tiene un coste de 15€ y es perfecta para el desarrollo. Para producción la  mejor opcion es colocar un modelos más avanzado
+                y rápido. En mi caso tengo una OPI plus 2 y es perfecta para tener varias instancias corriendo.
+            </p>
+            <p>
+                Vamos a configurar el hardware!
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Descargar e instalar una distro de linux en la cual alojaremos más tarde las instancias (servidores) que crearemos. Yo he elegido <a href='https://www.armbian.com/'>Armbian</a> la versión
+                        debian pero podéis elegir la distro que más os guste ya que la compatibilidad con la app que crearemos es muy alta.<br/>
+                        Según la distro, se graba la imágen a la sd de una forma u otra. Para armbian podeis seguir la documentación oficial <a href='https://docs.armbian.com/User-Guide_Getting-Started/'>aqui</a>.<br/>
+                        Como apunte, a mí personalmente me gusta más rufus que sdFormatter, auque en mi caso lo voy a hacer con dd (linux).
+                    </p>
+                    <img src="./assets/preparationSdcard.png" style='width:60%; height:auto;'>
+                </li>        
+                <li>
+                    <p>
+                        Conectar orangepi a pc mediante el cable USB-TTY ch340. Para la conexión debeis fijaros muy bien en la serigrafía que trae las 2 placas. Debe de ir GND a GND, Rx de OPI a Tx de USB-TTY y Tx de OPI a Rx de USB-TTY
+                        y, si trae la opción de 3.3v o 5 marcarlo a 3.3v para la OrangePI Lite. Si usais otra placa miraros la documentación del fabricante.
+                    </p>
+                    <img src="./assets/conexionUSBOpi.jpg" style='width:30%; height:auto;'>
+                </li>
+                <li>
+                    <p>
+                        Descargamos el cliente <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Putty</a> para windows o para linux conectamos con screen desde consola.
+                    </p>
+                    <div>
+                        <img src="./assets/puttyConf.png">
+                        <img src="./assets/screenConf.png">
+                    </div>
+                </li>
+                <li>
+                    <p>
+                        Cuando lo conectamos por primera vex, un asistente nos guía por el proceso de configuración del sistema operativo, nos pedira contraseña root, cuenta de usuatio, etc... Hasta que funalmente nos aparecera en la consola
+                        'login:', en la cual escribiremos root y el password que le hayamos puesto para loguearnos (Si el no hos ha pedido password, seguramente la imagen ya trae uno por defecto, por lo que deberemos ver la documentación
+                        de la distro que nos hayamos bajado). <br/>
+                        Una vez dentro, si el password es el que trae por defecto, escribiremos en la consola 'passwd' para cambiarlo, posteriormente 'armbian-config' y se nos abrirá un menú de configuración del dispositivo. Hay 2 configuraciones
+                        relevantes que son conectarlo a la wifi y otorgarle una IP statica.<br/>
+                        Cuando tengamos configurados los parámetros de red ya estaremos listos para probar la conexión por ssh, podemos entrar por putty indicando la ip del dispositivo o desde consola en linux.
+                    </p>
+                    <img src="./assets/opiInit.png" style='width:60%; height:auto;'>
+                </li>
+                <li>
+                    <p>
+                        Bien, ya tenemos el sistema arrancado y hemos establecido comunicación por wifi, por lo que podemos desconectar el cable USB-TTY.<br/>
+                        Ahora solo nos queda actualizar el sistema y descargar e instalar NodeJS ya que las instancias que programaremos estarán escritas en Javascript y Typescript ::corazon.
+                    </p>
+                    <p></p>
+                        El proceso es sencillo, nos dirigimos a la página oficial de node desde chrome o firefox, vamos a descargas, buscamos la version de linux ARM y en el botón de 'ARMv7' le damos click derecho y copiamos dirección del enlace
+                        (por lo general casi todas estas placas usan esta arquitectura).<br/>
+                        Para hacer la prueba, podemos abrir un block de notas y copiamos el contenido del porta papeles 'Control + V'. Debería de aparecer un enlace tipo: <em>https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-armv7l.tar.xz</em>
+                    </p>
+                    <p>
+                        Ahora desde la consola de la OrangePi escribimos los siguientes comandos para hacer la descarga y establecer los enlaces directos a la app:
+                    </p>
+                    <code>
+                        <ul>
+                            <li>apt -y update</li>
+                            <li>apt -y upgrade</li>
+                            <li>apt -y autoremove</li>
+                            <li>apt -y clean</li>
+                            <li>apt -y install wget</li>
+                            <li>cd /opt</li>
+                            <li>
+                                wget https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-armv7l.tar.xz <br/>
+                                NOTA** si tenéis problemas al hacer la descarga, usa el mismo comando pero con protocolo http
+                            </li>
+                            <li>tar -xvf node-v12.13.1.tar.gz</li>
+                            <li>cd node*/bin</li>
+                            <li>ln -s $(pwd)/node /usr/bin/node</li>
+                            <li>ln -s $(pwd)/npm /usr/bin/npm</li>
+                            <li>npm i -g nodemon</li>
+                            <li>ln -s $(pwd)/nodemon /usr/bin/nodemon</li>
+                        </ul>
+                    </code>
+                    <h3>Enhorabuena!!! acabas de preparar el servidor. ::aplause</h3>
+                </li>
+            </ul>
+        </article>
+
+        <article>
+            <h2>ESP 8266 e12 nodemcu</h2>
+            <p>
+                Para esta sección primero prepararemos el IDE de Arduino para posteriormente programar un código secillo para probar todo el sistema. 
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Lo primero que haremos es descargar el IDE de Arduino desde <a href="https://www.arduino.cc/en/Main/Software">aquí</a>, e instalarlo.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Vamos a File, Preferences y añadimos 'http://arduino.esp8266.com/stable/package_esp8266com_index.json' en Additional boards manager.
+                    </p>
+                    <img src="./assets/ideArd1.png" style='width:50%; height:auto;'>
+                </li>
+                <li>
+                    <p>
+                        Posteriormente, nos dirigimos a Tools, Board, Boards Manager, seleccionamos esp8266 e instalamos
+                    </p>
+                    <img src="./assets/ideArd2.png" style='width:50%; height:auto;'>
+                </li>
+                <li>
+                    <p>
+                        Conectaremos el esp8266 al pc por USB, miramos el puerto COM asignado desde administrador de dispositivos (windows) o desde /dev (linux),
+                            y seleccionamos el puerto desde Tools, Port desde el IDE de Arduino.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Por último seleccionamos la placa en Tools, Board, 'NodeMCU 1.0(ESP-12E)'.
+                    </p>
+                </li>
+            </ul>
+            <h3>Bien, si tenemos los pasos hechos hasta aquí, ya tenemos los dispositivos preparados para programarlos!</h3>
+        </article>
+
+        <article>
+            <h2>Preparación del primer código</h2>
+            <p>Hasta aquí la complejidad a sido mas bien baja, pero como son muchos pasos, vamos a crear un par de códigos sencillos para probar el sistema.</p>
+            <h3>ESP 8266</h3>
+            <p>
+                Basicamente, lo que hace este snippet, es crear un servidor a la escucha de peticiones TCP. Cuando el valor que reciba sea igual a '1', encenderá uno de los dos leds que lleva incorporada la placa.<br/>
+                Más adelante pondré un pin map con el listado de los pines, pero adelanto que el pin numero 2 (GPIO2) y 16 (GPIO16), además de su correspondiente pin, tiene un led.
+            </p>
+            <code>
+                <pre>
+                #include <ESP8266WiFi.h>
+
+
+                WiFiServer server(4444);
+                IPAddress local(10,10,0,15);
+                IPAddress subnet(255,255,255,0);
+                IPAddress gateway(10,10,0,1);
+                
+                
+                void setup() {
+                    pinMode(2, OUTPUT);
+                    pinMode(5, OUTPUT);
+                    digitalWrite(2, HIGH);
+                
+                    WiFi.config(local,subnet,gateway);
+                    WiFi.begin("YourWifiSSID", "YourWifiPassword");
+                    server.begin();
+                }
+                
+                void loop() {
+                    WiFiClient client = server.available();
+                    while (client.connected()) {
+                        while (client.available() > 0) {
+                            if (client.read() == 1) {
+                                digitalWrite(2, LOW);
+                                client.write('1');
+                                client.stop();
+                            } else {
+                                digitalWrite(2, HIGH);
+                                client.write('0');
+                                client.stop();
+                            }
+                        }
+                    }
+                    client.stop();
+                }
+                </pre>
+            </code>
+            <h3>OrangePi Lite</h3>
+            <code>
+                <p>
+                    Este otro código, establece conexión con el ESP, le envia un 'data' y espera una respuesta. Para ejecutar este script, el archivo debe acabar con extension '.js' y estar alojado en el servidor (Orange Pi).
+                    Pra lanzarlo debemos ir a la ruta donde se encuentra y usar node.<br/>
+                    Para encender el led: node [nombreDelArchivo].js 1<br/>
+                    Para apagar el led: node [nombreDelArchivo].js 0
+                </p>
+                <pre>
+                    const net = require('net');
+
+                    const serverPort = 4444;
+                    const serverIp = '10.10.0.15'
+                    
+                    const message = process.argv[2];
+                    const buffer = Buffer.from(message);
+                    
+                    const client = net.createConnection(serverPort, serverIp , ()=>{
+                        console.log('connected to server!');
+                        client.write(buffer);
+                    });
+                    
+                    client.on('data', (data)=>{
+                        console.log(data.toString());
+                    });
+                    
+                    client.on('end', ()=>{
+                        console.log('disconnected from server');
+                    });
+                </pre>
+            </code>
+            <h3>Conexión a internet</h3>
+            <p>
+                En este punto, ya podemos encender un led desde la red local, ahora vamos a configurar el router para poder comunicarnos con nuestro servidor desde internet, para ello debemos abrir el puerto 4444 del router
+                 a la ip que le hayas asignado a la OrangePI. Para probar que funcione. Si teenéis problemas al abrirlo, podéis consultar con vuestro proveedor de internet o bien mirar la documentación del router.
+            </p>
+        </article>
+
+        <article>
+            <h3>Pequeña app movil</h3>
+            <p>
+                Para esta sección maquetaremos un HTML para establecer conexión al servidor y este a si vez con el ESP para encender el led desde una 'app' desde el movil a traves del 4G.
+            </p>
+            <code>
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                    <title>Document</title>
+                </head>
+                <body>
+                    <button id='button'>PressMe</button>
+                </body>
+                <script>
+                    document.querySelector('button').addEventListener('click', OnOfLight);
+
+                    function OnOfLight(value) {
+                        const url = 'http://yourPublicIP';
+                        const req = new XMLHttpRequest();
+
+                        req.open('post', url);
+                        req.onreadystatechange = ()=>{
+                            if (this.readyState == 4 && this.status == 200) {
+                            console.log(xhttp.responseText)
+                            }
+                        }
+                        req.send(value);
+                    }
+                </script>
+                </html>
+            </code>
+        </article>
+    </section>
+    
+</body>
+</html>
