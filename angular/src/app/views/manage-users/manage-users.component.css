@@ -1,0 +1,58 @@
+.main-users-container {
+    height: 90vh;
+    overflow: scroll;
+}
+
+.row-user {
+    width: 95%;
+    color: #ccc;
+    background-color: #222;
+    margin: 1vh auto;
+    padding: 1vh 3%
+}
+
+.list-users {
+    margin-bottom: 5vh;
+}
+
+.new-item {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0 0;
+    padding: 1.5vh 0;
+    color: #c00;
+    background-color: rgba(0,0,0,1);
+    font-size: 2em;
+    text-align: center;
+}
+
+.new-item h5{
+    width: 150px;
+    margin: auto;
+}
+
+.new-user {
+    position:absolute;
+    bottom: 5vh;
+    width: 100%;
+}
+
+.select-new-user {
+    display:block;
+    width: 87%;
+    margin: 0;
+    color: #ccc;
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+}
+
+.option-new-user {
+    color: #ccc;
+    background-color: #000;
+    border: #000;
+}

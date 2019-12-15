@@ -1,0 +1,20 @@
+.deviceList {
+    display: block;
+    margin: .8vh 2%;
+    color: #ccc;
+    background-color: #222;
+    padding: 1vh 3%;
+}
+
+.devices-container {
+    height: 23vh;
+    overflow: scroll;
+
+}
+
+
+.form-group {
+    position: fixed;
+    bottom: 1vh;
+    width:100%;
+}

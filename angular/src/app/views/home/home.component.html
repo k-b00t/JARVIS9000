@@ -1,0 +1,12 @@
+<div class='stats d-flex justify-content-between'>
+    <div class='info'>
+
+    </div>
+    <fa-icon (click)='manageView("manageUsers")' *ngIf='data["view"] === "devices"' [icon]='faUserCog' class='new-item'></fa-icon>
+    <fa-icon (click)='manageView("devices")' *ngIf='data["view"] !== "devices"' [icon]='faHome' class='new-item'></fa-icon>
+</div>
+
+<app-devices *ngIf='data["view"] === "devices"'></app-devices>
+<app-manage-users *ngIf='data["view"] === "manageUsers"'></app-manage-users>
+<app-manage-groups *ngIf='data["view"] === "manageGroups"'></app-manage-groups>
+<app-manage-devices *ngIf='data["view"] === "manageDevices"'></app-manage-devices>

@@ -1,0 +1,29 @@
+<div class='container'>
+    <div id='row-title' class='row'>
+        <div class='col-12'>
+            <img id='login_image' src="../../../assets/hal9000.png" alt="hal_image">
+        </div>
+    </div>
+    <div id='row-form' class='row'>
+        <div class='col-12'>
+            <form (ngSubmit)='sendForm(form)' #form='ngForm' *ngIf='data["view"] === "form"'>
+                <div class='form-group d-flex justify-content-between'>
+                    <fa-icon [icon]='faUser' class='icon-form'></fa-icon>
+                    <input (click)='cleanInputs()' [(ngModel)]='data["user"]' #user='ngModel' name='user' type="text" id='user' class='form-input' placeholder='{{data["placeholder"].user}}'>
+                </div>
+                <div class='form-group d-flex justify-content-between'>
+                    <fa-icon [icon]='faKey' class='icon-form'></fa-icon>
+                    <input (click)='cleanInputs()' [(ngModel)]='data["passwd"]' #passwd='ngModel' name='passwd' type="password" id='passwd' class='form-input' placeholder='{{data["placeholder"].password}}'>
+                </div>
+                <button type="submit" class='btn btn-submit'>
+                    <fa-icon [icon]="faSignInAlt"></fa-icon>
+                </button>
+            </form>
+
+            <div class='maxTry' *ngIf='data["view"] === "maxAttempts"'>
+                <h5 class='text-danger text-center'>Next login at: {{ data['nextLogin'] }} seconds</h5>
+            </div>
+
+        </div>
+    </div>
+</div>

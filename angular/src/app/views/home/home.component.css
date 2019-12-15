@@ -1,0 +1,14 @@
+.new-item {
+    color: #c00;
+    font-size: 1.5em;
+    margin: auto 10px auto 0;
+}
+
+.stats {
+    width: 100%;
+    height: 10vh;
+}
+
+.info {
+    width: 80%;
+}

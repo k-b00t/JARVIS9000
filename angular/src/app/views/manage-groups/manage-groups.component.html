@@ -1,0 +1,72 @@
+<div (click)='changeGroupView("confirmDelete")' class='d-flex justify-content-end' *ngIf='data["view"] === "modifyGroup"'>
+    <fa-icon [icon]='faRecycle' class='icon-remove icon-position'></fa-icon>
+</div>
+<form (ngSubmit)='submitForm(form)' #form='ngForm' class='form-group' *ngIf='data["view"] === "newGroup" || data["view"] === "modifyGroup"'>
+    <h3 class='text-light text-center mb-5'>{{ data.title }}</h3>
+    <div class='row-input d-flex justify-content-between'>
+        <fa-icon [icon]='faSignature' class='icon-form'></fa-icon>
+        <input (click)='cleanInput()' [(ngModel)]='data["name"]' #name='ngModel' [readOnly]='data["groupInput"]'  name='name' class='form-input' type="text" value='{{data["name"]}}' placeholder='{{data["placeholder"]}}'>
+    </div>
+    <div class='icon-group'>
+        <h6 class='text-light'>Select icon:</h6>
+        <div class='col-12 d-flex justify-content-center'>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faTv' class='radio-group' id='faTv'>
+            <label for='faTv' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faTv'></fa-icon>
+                <small>Living room</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faMailBulk' class='radio-group' id='faMailBulk'>
+            <label for='faMailBulk' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faMailBulk'></fa-icon>
+                <small>Office</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faBed' class='radio-group' id='faBed'>
+            <label for='faBed' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faBed'></fa-icon>
+                <small>Bedroom</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faUtensils' class='radio-group' id='faUtensils'>
+            <label for='faUtensils' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faUtensils'></fa-icon>
+                <small>Dinnig room</small>
+            </label>
+        </div>
+        <div class='col-12 d-flex justify-content-center'>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faConciergeBell' class='radio-group' id='faConciergeBell'>
+            <label for='faConciergeBell' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faConciergeBell'></fa-icon>
+                <small>Kitchen</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faUmbrellaBeach' class='radio-group' id='faUmbrellaBeach'>
+            <label for='faUmbrellaBeach' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faUmbrellaBeach'></fa-icon>
+                <small>Garden</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faWarehouse' class='radio-group' id='faWarehouse'>
+            <label for='faWarehouse' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faWarehouse'></fa-icon>
+                <small>Garage</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faToilet' class='radio-group' id='faToilet'>
+            <label for='faToilet' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faToilet'></fa-icon>
+                <small>Toilet</small>
+            </label>
+        </div>
+    </div>
+    <button class='btn-submit' type="submit" style='width: 40%;'>Save</button>
+</form>
+
+<div class='delete-container' *ngIf='data["view"] === "confirmDelete"'>
+    <div>
+        <h5 class='text-center'>Are you sure you want to delete?</h5>
+        <div class='delete-buttons d-flex justify-content-around'>
+            <button (click)='deleteGroup()' class='btn btn-form'>Confirm</button>
+            <button (click)='changeGroupView("modifyGroup")' class='btn btn-form'>Back</button>
+        </div>
+    </div>
+</div>
+
+<div class='error' *ngIf='data["view"] === "errorFeedBack"'>
+    <h5 class='text-center text-danger'>{{ data['err'] }}</h5>
+</div> 

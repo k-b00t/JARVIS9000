@@ -1,0 +1,100 @@
+<div *ngIf='data["data"][data["selectedGroup"]]["devices"] && (data["view"] === "newDevice" || data["view"] === "modifyDevice")' class="devices-container">
+    <div *ngFor='let device of data["data"][data["selectedGroup"]]["devices"]; let i=index'>
+        <input [ngModel]='data["selectedDevice"]' value='{{device.name}}' name='deviceList' type="radio" id='input{{i}}'>
+        <label (click)='selectDevice(device)' for="input{{i}}" class='deviceList d-flex justify-content-between'>
+            <div class='d-flex flex-row'>
+                <fa-icon *ngIf='device.icon === "faTv"' [icon]='faTv' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faLightbulb"' [icon]='faLightbulb' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faPlug"' [icon]='faPlug' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faWindowMaximize"' [icon]='faWindowMaximize' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faFan"' [icon]='faFan' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faHeadphonesAlt"' [icon]='faHeadphonesAlt' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faCoffee"' [icon]='faCoffee' class='mx-2 my-auto'></fa-icon>
+                <fa-icon *ngIf='device.icon === "faHdd"' [icon]='faHdd' class='mx-2 my-auto'></fa-icon>
+                <h5 class='my-auto'>{{ device.name }}</h5>
+            </div>
+            <small class='my-auto'>{{ device.ip }}</small>
+        </label>
+    </div>
+</div>
+
+
+<form (ngSubmit)='submitForm(form)' #form='ngForm' class='form-group' *ngIf='data["view"] === "newDevice" || data["view"] === "modifyDevice"'>
+    <h3 *ngIf='!data["data"][data["selectedGroup"]]["devices"]' class='text-light text-center mb-5'>{{ data.title }}</h3>
+    <div class='row-input d-flex justify-content-between'>
+        <fa-icon [icon]='faSignature' class='icon-form'></fa-icon>
+        <input (click)='cleanInput()' [(ngModel)]='data["name"]' #name='ngModel' [readOnly]='data["groupInput"]'  name='name' class='form-input' id='name' type="text" value='{{data["name"]}}' placeholder='{{data["placeholder"].name}}'>
+    </div>
+    <div class='row-input d-flex justify-content-between'>
+        <fa-icon [icon]='faSatelliteDish' class='icon-form'></fa-icon>
+        <input (click)='cleanInput()' [(ngModel)]='data["ip"]' #ip='ngModel'  name='ip' class='form-input' type="text" id='ip' placeholder='{{data["placeholder"].ip}}'>
+    </div>
+    <div class='row-input d-flex justify-content-between'>
+        <fa-icon [icon]='faTerminal' class='icon-form'></fa-icon>
+        <input (click)='cleanInput()' [(ngModel)]='data["command"]' #command='ngModel' name='command' class='form-input' id='command' type="text" placeholder='{{data["placeholder"].command}}'>
+    </div>
+    <div class='icon-group'>
+        <h6 class='text-light'>Select icon:</h6>
+        <div class='col-12 d-flex justify-content-center'>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faLightbulb' class='radio-group' id='faLightbulb'>
+            <label for='faLightbulb' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faLightbulb'></fa-icon>
+                <small>Light</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faPlug' class='radio-group' id='faPlug'>
+            <label for='faPlug' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faPlug'></fa-icon>
+                <small>Plug</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faWindowMaximize' class='radio-group' id='faWindowMaximize'>
+            <label for='faWindowMaximize' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faWindowMaximize'></fa-icon>
+                <small>Blind</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faFan' class='radio-group' id='faFan'>
+            <label for='faFan' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faFan'></fa-icon>
+                <small>Thermostat</small>
+            </label>
+        </div>
+        <div class='col-12 d-flex justify-content-center'>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faTv' class='radio-group' id='faTv'>
+            <label for='faTv' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faTv'></fa-icon>
+                <small>SmartTv</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faHeadphonesAlt' class='radio-group' id='faHeadphonesAlt'>
+            <label for='faHeadphonesAlt' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faHeadphonesAlt'></fa-icon>
+                <small>Stereo</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faCoffee' class='radio-group' id='faCoffee'>
+            <label for='faCoffee' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faCoffee'></fa-icon>
+                <small>Coffe maker</small>
+            </label>
+            <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faHdd' class='radio-group' id='faHdd'>
+            <label for='faHdd' class='d-flex flex-column icon-container'>
+                <fa-icon [icon]='faHdd'></fa-icon>
+                <small>Thing</small>
+            </label>
+        </div>
+    </div>
+    <button *ngIf='data["view"] === "newDevice"' class='btn-submit' type="submit" style='width: 40%;'>Save</button>
+    <div *ngIf='data["view"] === "modifyDevice"' class='d-flex justify-content-around'>
+        <button (click)='changeView("confirmDelete")' type='button' class='btn-sm btn-form'>Delete</button>
+        <button type='submit' class='btn-sm btn-form'>Modify</button>
+    </div>
+</form>
+<div class='delete-container' *ngIf='data["view"] === "confirmDelete"'>
+    <div>
+        <h5 class='text-center'>Are you sure you want to delete?</h5>
+        <div class='delete-buttons d-flex justify-content-around'>
+            <button (click)='deleteDevice()' class='btn btn-form'>Confirm</button>
+            <button (click)='changeView("modifyDevice")' class='btn btn-form'>Back</button>
+        </div>
+    </div>
+</div>
+<div class='error' *ngIf='data["view"] === "errorFeedBack"'>
+    <h5 class='text-center text-danger'>{{ data['err'] }}</h5>
+</div> 

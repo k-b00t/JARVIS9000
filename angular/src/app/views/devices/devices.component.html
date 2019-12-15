@@ -1,0 +1,55 @@
+<div class='conainer-main d-flex justify-content-between'>
+    <div class='aside'>
+        <div class='group-icons'>
+            <div *ngFor='let group of data.data; let i=index'>
+                <input [(ngModel)]='data["selectedGroup"]' type="radio" name="group" value='{{i}}' id="group{{i}}">
+                <label  (click)='changeGroup(i)' for="group{{i}}" class='icon-container'>
+                    <fa-icon *ngIf='group.icon === "faTv"' [icon]='faTv'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faMailBulk"' [icon]='faMailBulk'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faBed"' [icon]='faBed'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faUtensils"' [icon]='faUtensils'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faConciergeBell"' [icon]='faConciergeBell'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faUmbrellaBeach"' [icon]='faUmbrellaBeach'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faWarehouse"' [icon]='faWarehouse'></fa-icon>
+                    <fa-icon *ngIf='group.icon === "faToilet"' [icon]='faToilet'></fa-icon>
+                    <small>{{ group.name }}</small>
+                </label>
+            </div>
+        </div>
+        <div class='new-item new-group'>
+            <fa-icon (click)='openModal(groupopt)' [icon]='faCog'></fa-icon>
+            <ng-template #groupopt let-modal>
+                <div class='custom-modal d-flex justify-content-around'>
+                    <fa-icon (click)="modal.dismiss('')" [icon]='faTimes' class='modal-close-icon d-flex justify-content-end'></fa-icon>
+                    <button (click)='newGroup("manageGroups")' class='btn-sm btn-form'>New Group</button>
+                    <button (click)='modifyGroup("manageGroups")' class='btn-sm btn-form'>Modify</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class='devices'>
+        <div *ngIf='data["data"][data["selectedGroup"]]["devices"]'>
+            <div *ngFor='let device of data["data"][data["selectedGroup"]]["devices"]'>
+                <div (click)='sendCommand(device)'  class='device d-flex justify-content-between'>
+                    <div class='d-flex flex-row'>
+                        <fa-icon *ngIf='device.icon === "faTv"' [icon]='faTv' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faLightbulb"' [icon]='faLightbulb' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faPlug"' [icon]='faPlug' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faWindowMaximize"' [icon]='faWindowMaximize' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faFan"' [icon]='faFan' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faHeadphonesAlt"' [icon]='faHeadphonesAlt' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faCoffee"' [icon]='faCoffee' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <fa-icon *ngIf='device.icon === "faHdd"' [icon]='faHdd' class='mx-2 my-auto' id='{{device.selector}}'></fa-icon>
+                        <h6 class='my-auto'>{{ device.name }}</h6>
+                    </div>
+                    <small class='my-auto'>{{ device.ip }}</small>
+                </div>
+            </div>
+        </div>
+        <div class='new-device d-flex justify-content-center' (click)='newDevice("manageDevices")'>
+            <fa-icon [icon]='faPlus' class='mx-2'></fa-icon>
+            <h6>Manage Device</h6>
+        </div>
+    </div>
+</div>

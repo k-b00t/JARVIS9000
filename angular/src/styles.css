@@ -1,1 +1,127 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*:hover,
+*:focus,
+*:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+body {
+    background-color: rgba(0,0,0,1);
+}
+
+html,
+body,
+div {
+    margin: 0;
+    padding: 0;
+}
+
+input[type='radio'] {
+    display:none;
+}
+
+input[type='radio']:checked + label {
+    background-color: #444;
+}
+
+
+
+.form-input {
+    padding: 7px 0;
+    width: 87%;
+    margin-bottom: 20px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    color: #ccc;
+    background-color: transparent;
+}
+
+.input-placeholder::placeholder {
+    color: #c00;
+}
+
+.icon-form {
+    width: 5%;
+    margin: 11px 0 0 8px;
+    color: #ccc;
+}
+
+.btn-submit {
+    display:block;
+    width: 60%;
+    padding: 10px 0;
+    margin: 7vh auto 0 auto;
+    background-color: rgb(199, 23, 23);
+    border-radius: 50px;
+}
+
+.btn-form {
+    display: inline-block;
+    width: 40%;
+    padding: 10px 0;
+    margin: 7vh auto 0 auto;
+    color: #ccc;
+    background-color: rgb(199, 23, 23);
+    border-radius: 50px;
+}
+
+
+.icon-remove {
+    color: #c00;
+    font-size: 2em;
+    margin: 3vh 5% 0 0;
+}
+
+.delete-container {
+    height: 90vh;
+    color: #c00;
+}
+
+.delete-container h5 {
+    position:relative;
+    top: 45vh;
+}
+
+.delete-buttons {
+    position: absolute;
+    bottom: 5vh;
+    width: 100%;
+}
+
+
+
+.row-input {
+    margin: 0 6%;
+}
+
+.icon-group {
+    margin-top: 5vh;
+}
+
+.icon-group h6 {
+    margin-left: 6%;
+}
+
+.icon-container {
+    width: 80px;
+    margin: 2% 1.5%;
+    padding: 10px 0;
+    color: #ccc;
+    background-color: #222;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.icon-position {
+    position:absolute;
+    top: 30vh;
+    right: 1%;
+}
+
+
+.error {
+    position: relative;
+    top: 35vh;
+}

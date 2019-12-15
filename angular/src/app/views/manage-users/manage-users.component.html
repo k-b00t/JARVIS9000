@@ -1,0 +1,63 @@
+<div class='main-users-container' *ngIf='data["view"] === "listUsers"'>
+    <div class='list-users'>
+        <div (click)='modifyUser(i)' class='col-12 row-user' *ngFor='let user of dataUsers; let i=index'>
+            <div class='d-flex justify-content-between'>
+                <h6>Name: {{ user['username'] }}</h6>
+                <h6>Role: {{ user['role'] }}</h6>
+            </div>
+            <small class='text-left'>{{ momentGetNow(user.timestamp) }}</small>
+        </div>
+    </div>
+    <div  (click)='changeUserView("newUser")' class='new-item'>
+        <h5>
+            <fa-icon [icon]='faPlus'></fa-icon>
+            New user
+        </h5>
+    </div>
+</div>
+
+<div class='new-user' *ngIf='data["view"] === "newUser" || data["view"] === "modifyUser"'>
+    <div (click)='changeUserView("confirmDelete")' class='d-flex justify-content-end' *ngIf='data["view"] === "modifyUser"'>
+        <fa-icon [icon]='faRecycle' class='icon-remove'></fa-icon>
+    </div>
+    <h3 class='text-center text-light mb-5 '>{{ data['title'] }}</h3>
+    <form (ngSubmit)='sendForm(form)' #form='ngForm'>
+        <div class='form-group d-flex justify-content-between'>
+            <fa-icon [icon]='faUser' class='icon-form'></fa-icon>
+            <input (click)='cleanInputs()' [(ngModel)]='data["user"]' #user='ngModel' [readOnly]='data["userInput"]' name='user' type="text" id='user' class='form-input' placeholder='{{data["placeholder"].user}}'>
+        </div>
+        <div class='form-group d-flex justify-content-between'>
+            <fa-icon [icon]='faKey' class='icon-form'></fa-icon>
+            <input (click)='cleanInputs()' [(ngModel)]='data[""]' #passwd='ngModel' name='passwd' type="password" id='passwd' class='form-input' placeholder='{{data["placeholder"].password}}'>
+        </div>
+        <div class='form-group d-flex justify-content-between'>
+            <fa-icon [icon]='faKey' class='icon-form'></fa-icon>
+            <input (click)='cleanInputs()' [(ngModel)]='data["passwdConf"]' #passwd='ngModel' name='passwdConf' type="password" id='passwdConf' class='form-input' placeholder='{{data["placeholder"].passwordConf}}'>
+        </div>
+        <div class='form-group d-flex justify-content-between'>
+            <fa-icon [icon]='faHatCowboySide' class='icon-form'></fa-icon>
+            <select [(ngModel)]='data["role"]' name="role" class='select-new-user'>
+                <option class='option-new-user' value="admin">Admin</option>
+                <option class='option-new-user' value="user">User</option>
+            </select>
+        </div>
+        <div class='d-flex justify-content-around'>
+            <button (click)='changeUserView("listUsers")' type='button' class='btn btn-form'>Back</button>
+            <button type="submit" class='btn btn-form'>Send</button>
+        </div>
+    </form>
+</div>
+
+<div class='delete-container' *ngIf='data["view"] === "confirmDelete"'>
+    <div>
+        <h5 class='text-center'>Are you sure you want to delete?</h5>
+        <div class='delete-buttons d-flex justify-content-around'>
+            <button (click)='deleteUser()' class='btn btn-form'>Confirm</button>
+            <button (click)='changeUserView("modifyUser")' class='btn btn-form'>Back</button>
+        </div>
+    </div>
+</div>
+
+<div class='error' *ngIf='data["view"] === "errorFeedBack"'>
+    <h5 class='text-center text-danger'>{{ data['err'] }}</h5>
+</div> 

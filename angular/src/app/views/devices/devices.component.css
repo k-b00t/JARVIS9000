@@ -1,0 +1,90 @@
+.conainer-main {
+    background-color: #171717;
+}
+
+.aside {
+    width: 23%;
+    height: 88vh;
+    margin: 1vh .75% 0 .75%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #000;
+}
+
+.group-icons {
+    margin-bottom: 5vh;
+}
+
+.devices {
+    width: 74%;
+    height: 88vh;
+    margin: 1vh .75% 0 .75%;
+    background-color: #000;
+}
+
+.device {
+    color: #aaa;
+    background-color: #222;
+    margin: .8vh 2%;
+    padding: 5%;
+}
+
+input[type='radio']:checked + .icon-container {
+    background-color: #353535;
+}
+
+
+
+.new-item {
+    position: fixed;
+    bottom: 1vh;
+    color: #c00;
+    background-color: #000;
+    font-size: 1.5em;
+}
+
+.new-device {
+    width: 100%;
+    padding: 3% 0;
+}
+
+.new-device * {
+    margin: auto 0;
+    color: #aaa;
+}
+
+.new-group {
+    width: 23%;
+    text-align: center;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin: .8vh 1%;
+    padding: 8% 3%;
+    color: #ccc;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 0;
+}
+
+.custom-modal {
+    padding: 5% 5%;
+    background-color: #222;
+}
+.modal-close-icon {
+    position:absolute;
+    right: 5%;
+    color: #c00;
+    font-size: 1em;
+}
+
+.icon-green {
+    color: #0c0;
+}
+
+.icon-red {
+    color: #c00;
+}
