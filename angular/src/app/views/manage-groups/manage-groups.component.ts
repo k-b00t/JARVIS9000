@@ -70,10 +70,7 @@ export class ManageGroupsComponent
     })
     this.SubsModifyGroup = this._data.SubjModifyGroup.subscribe((data:any)=>{
       if(data['response']) {
-        this._data['data']['data'][this.data['index']] = {
-          name: this.data['formParsed'].groupname,
-          icon: this.data['formParsed'].icon
-        }
+        this._data['data']['data'][this.data['index']]['icon'] = this.data['formParsed'].icon;
         this._data.SubjView.next('devices');
       } else {
         this.data['err'] = data['message'];

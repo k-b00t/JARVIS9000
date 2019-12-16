@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const jwt = require('./middlewares/jwt');
 const router = require('./routing/router');
 const socket = require('./routing/socket');
+const tcpServer = require('./routing/tcpServer');
 
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -26,7 +27,6 @@ const api = http.createServer(app);
 const io  = socketIo(api);
 global.io = io.on('connection', socket);
 
-
 mongodb.connect();
 mongodb.testAdminUser();
 
@@ -39,5 +39,5 @@ app.use(router);
 
 
 api.listen(3000, ()=>{
-    console.log('Node4:3000   status: connected');
+    console.log('Node5:3000   status: connected');
 })

@@ -18,6 +18,7 @@ export class HomeComponent
 
   subsData:Subscription;
   subsView:Subscription;
+  subsStatus:Subscription;
   data:object;
 
 
@@ -27,15 +28,16 @@ export class HomeComponent
     this.data = {
       view: ''
     }
-    this.subsView = this._data.SubjView.subscribe((data:string)=>{ this.data['view'] = data });
-
-    this._functions.ajaxHttp(`${this._data.endpoint}groups`, 'get', null);
+    this.subsView = this._data.SubjView.subscribe((data:string)=>{
+      this.data['view'] = data;
+    })
     this.subsData  = this._data.SubjData.subscribe((data:any)=>{
       this._data['data']['data'] = data;
       this.data = {
         view: 'devices'
       }
     })
+    this._functions.ajaxHttp(`${this._data.endpoint}groups`, 'get', null);
   }
 
 
@@ -47,6 +49,6 @@ export class HomeComponent
   ngOnDestroy() {
     this.subsView.unsubscribe();
     this.subsData.unsubscribe();
-
+    this.subsStatus.unsubscribe();
   }
 }

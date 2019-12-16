@@ -87,7 +87,6 @@ export class DevicesComponent
         centered: true
     }
     this.SubsSocketGetDataEvent = this._data.SubjSocketGetDataEvent.subscribe((data:object)=>{
-      console.log('getData')
       data['command'].forEach((d:any)=>{
         const node = document.querySelector(`#ip${data['ip'].replace(/\./g, '')}com${d['value']}`);
         (d['state'] == 1)
@@ -109,6 +108,7 @@ export class DevicesComponent
 
 
   getDeviceState():void {
+    this.data['state'] = {};
     this.data["data"][this.data["selectedGroup"]]["devices"].forEach((d:object)=> {
       if(!this.data['state'][d['ip']]) {
         this.data['state'][d['ip']] = [d['command']];
@@ -132,6 +132,8 @@ export class DevicesComponent
 
   changeGroup(index:number) {
     this.data['selectedGroup'] = index.toString();
+    this.getDeviceState();
+    this._socket.getDataEmit(this.data['state']);
   }
 
   newGroup(view:string):void {

@@ -25,6 +25,7 @@ module.exports = (socket)=>{
                 tcp.destroy();
                 socket.emit('getData', buffer);
             })
+            tcp.on('error', (err)=>{ })
         })
     })
 
@@ -45,6 +46,7 @@ module.exports = (socket)=>{
             global.io.emit('changeState', buffer);
             tcp.destroy();
         })
+        tcp.on('error', (err)=>{ })
     })
     socket.on('disconnect', ()=> {})
 }
