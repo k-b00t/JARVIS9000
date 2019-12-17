@@ -14,7 +14,6 @@ const mongodb = require('./databases/mongodb');
 const socketIo = require('socket.io');
 const express = require('express');
 const https = require('https');
-const http = require('http');
 
 const cert = {
     key: fs.readFileSync('../certs/privkey.pem'),
@@ -22,8 +21,7 @@ const cert = {
 }
 
 const app = express();
-const api = http.createServer(app);
-// const api = https.createServer(cert, app)
+const api = https.createServer(cert, app)
 const io  = socketIo(api);
 global.io = io.on('connection', socket);
 
@@ -39,5 +37,5 @@ app.use(router);
 
 
 api.listen(3000, ()=>{
-    console.log('Node5:3000   status: connected');
+    console.log('Node4:3000   status: connected');
 })

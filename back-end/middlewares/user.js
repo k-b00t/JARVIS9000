@@ -53,7 +53,7 @@ const loginUser = (req, res)=> {
                                         count: 0
                                     }
                                     const token = jwt.sign({username: req.body.username}, secret);
-                                    res.cookie('auth', token, { expires: new Date(Date.now() + 1000 * 3600 * 24 * 365) }).send({login: true});
+                                    res.cookie('auth', token, { expires: new Date(Date.now() + 1000 * 3600 * 24 * 365), sameSite:'strict' }).send({login: true});
                                 } else {
                                     attempts['req.user.username'] = {
                                         count: attempts['req.user.username'].count +1,

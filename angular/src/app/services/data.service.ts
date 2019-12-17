@@ -31,8 +31,12 @@ export class DataService
     // this.sokect = 'https://hal9000.evils.in:3000';
     // this.endpoint = 'https://hal9000.evils.in:3000/';
 
-    this.socket = 'http://localhost:3000';
-    this.endpoint = 'http://localhost:3000/';
+    // this.socket = 'http://localhost:3000';
+    // this.endpoint = 'http://localhost:3000/';
+
+    this.socket = 'https://192.168.10.10:3000/';
+    this.endpoint = 'https://192.168.10.10:3000/';
+
     this.data = {
       view: '',
       title: '',

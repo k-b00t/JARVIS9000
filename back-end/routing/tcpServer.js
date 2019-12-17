@@ -22,5 +22,5 @@ const server = net.createServer((socket)=>{
 })
 
 server.listen(4444, ()=>{
-    console.log('Node4:4444   status: connected');
+    console.log('Node3:4444   status: connected');
 })

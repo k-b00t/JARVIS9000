@@ -1,6 +1,7 @@
 'use strict';
 
 const fs      = require('fs');
+const cors    = require('cors');
 const http    = require('http');
 const https   = require('https');
 const express = require('express');
@@ -12,9 +13,10 @@ http.createServer((req, res)=>{
     res.writeHead(301, {Location: 'https://hal9000.evils.in:443/'});
     res.end();
 }).listen(80, ()=>{
-    console.log('Node0:80     status: connected');
+    console.log('\nNode0:80     status: connected');
 })
 
+app.use(cors());
 app.use(express.static('public'));
 
 https.createServer({

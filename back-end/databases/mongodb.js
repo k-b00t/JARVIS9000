@@ -85,7 +85,7 @@ module.exports = {
             useNewUrlParser: true,
             useFindAndModify: false
         })
-        console.log('Node3:27017  status: connected');
+        console.log('Node2:27017  status: connected');
     },
     testAdminUser: ()=>{
         userModel.findOne({username: 'admin'}, (err, data)=> {
