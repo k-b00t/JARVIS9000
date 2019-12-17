@@ -9,7 +9,7 @@ module.exports = (socket)=>{
         Object.keys(dataClnt).forEach(ip=>{
             const tcp = new net.Socket();
 
-            tcp.connect(4444, ip);
+            tcp.connect(4445, ip);
             tcp.write('i');
             tcp.on('data', (dataESP)=>{
                 buffer = {
@@ -32,7 +32,7 @@ module.exports = (socket)=>{
     socket.on('changeState', (dataClnt)=>{
         const tcp = new net.Socket();
 
-        tcp.connect(4444, dataClnt.ip);
+        tcp.connect(4445, dataClnt.ip);
         tcp.write(dataClnt.command);
         tcp.on('data', (dataESP)=>{
             buffer = {

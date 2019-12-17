@@ -13,7 +13,6 @@ export class SocketIoService
   constructor(private _data:DataService) {
     this.socket = io.connect(this._data['socket']);
     this.socket.on('getData', (data:any)=>{
-      console.log('response', data)
       this._data.SubjSocketGetDataEvent.next(data);
     })
     this.socket.on('changeState', (data:any)=>{
@@ -23,7 +22,6 @@ export class SocketIoService
 
 
   getDataEmit(data:any) {
-    console.log('request', data)
     this.socket.emit('getData', data);
   }
 
