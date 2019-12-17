@@ -10,7 +10,7 @@ const app = express();
 
 
 http.createServer((req, res)=>{
-    res.writeHead(301, {Location: 'https://hal9000.evils.in:443/'});
+    res.writeHead(301, {Location: 'https://192.168.10.10:443/'});
     res.end();
 }).listen(80, ()=>{
     console.log('\nNode0:80     status: connected');
