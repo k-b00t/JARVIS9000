@@ -50,7 +50,7 @@ export class DevicesComponent
   SubsSocketGetDataEvent:Subscription;
   SubsSocketChangeStateEvent:Subscription;
 
-  data:object;
+  data:any;
 
   constructor(private _data:DataService, private _functions:FunctionsService, private modalService: NgbModal, private _socket:SocketIoService) {
     this.faPlus = faPlus;

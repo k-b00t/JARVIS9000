@@ -32,7 +32,7 @@ export class ManageDevicesComponent
   subsModifyDevice:Subscription;
   subsDeleteDevice:Subscription;
 
-  data: object;
+  data: any;
 
   constructor(private _data:DataService, private _functions:FunctionsService) {
     this.faSignature = faSignature;

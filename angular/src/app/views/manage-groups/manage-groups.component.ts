@@ -31,7 +31,7 @@ export class ManageGroupsComponent
   SubsDeleteGroup:Subscription;
 
 
-  data:object;
+  data:any;
 
   constructor(private _data:DataService, private _functions:FunctionsService) {
     this.data = this._data['data'];
