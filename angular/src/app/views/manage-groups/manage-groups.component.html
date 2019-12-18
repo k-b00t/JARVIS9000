@@ -1,5 +1,24 @@
+<div class='groups-container' *ngIf='data["view"] === "newGroup" || data["view"] === "modifyGroup"'>
+    <div class='row m-2'>
+        <div *ngFor='let group of data.data; let i=index' class='col-3 p-1'>
+            <input [(ngModel)]='data["selectedGroup"]' type="radio" name="group" value='{{i}}' id="group{{i}}">
+            <label  (click)='selectGroup(i)' for="group{{i}}" class='icon-container-group d-flex flex-column'>
+                <fa-icon *ngIf='group.icon === "faTv"' [icon]='faTv'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faMailBulk"' [icon]='faMailBulk'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faBed"' [icon]='faBed'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faUtensils"' [icon]='faUtensils'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faConciergeBell"' [icon]='faConciergeBell'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faUmbrellaBeach"' [icon]='faUmbrellaBeach'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faWarehouse"' [icon]='faWarehouse'></fa-icon>
+                <fa-icon *ngIf='group.icon === "faToilet"' [icon]='faToilet'></fa-icon>
+                <small>{{ group.name }}</small>
+            </label>
+        </div>
+    </div>
+</div>
+
+
 <form (ngSubmit)='submitForm(form)' #form='ngForm' class='form-group' *ngIf='data["view"] === "newGroup" || data["view"] === "modifyGroup"'>
-    <h3 class='text-light text-center mb-5'>{{ data.title }}</h3>
     <div class='row-input d-flex justify-content-between'>
         <fa-icon [icon]='faSignature' class='icon-form'></fa-icon>
         <input (click)='cleanInput()' [(ngModel)]='data["name"]' #name='ngModel' [readOnly]='data["groupInput"]'  name='name' class='form-input' type="text" value='{{data["name"]}}' placeholder='{{data["placeholder"]}}'>
@@ -47,7 +66,7 @@
             <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faToilet' class='radio-group' id='faToilet'>
             <label for='faToilet' class='d-flex flex-column icon-container'>
                 <fa-icon [icon]='faToilet'></fa-icon>
-                <small>Toilet</small>
+                <small>Restroom</small>
             </label>
         </div>
     </div>

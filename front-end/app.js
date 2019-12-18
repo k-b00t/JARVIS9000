@@ -1,7 +1,6 @@
 'use strict';
 
 const fs      = require('fs');
-const cors    = require('cors');
 const http    = require('http');
 const https   = require('https');
 const express = require('express');
@@ -16,7 +15,6 @@ http.createServer((req, res)=>{
     console.log('\nNode0:80     status: connected');
 })
 
-app.use(cors());
 app.use(express.static('public'));
 
 https.createServer({

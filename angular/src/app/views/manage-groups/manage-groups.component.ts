@@ -36,6 +36,7 @@ export class ManageGroupsComponent
   constructor(private _data:DataService, private _functions:FunctionsService) {
     this.data = this._data['data'];
     this.data['placeholder'] = 'Enter group name';
+
     this.faBed = faBed;
     this.faSignature = faSignature;
     this.faTv = faTv;
@@ -60,7 +61,8 @@ export class ManageGroupsComponent
       if(data['response']) {
         this._data['data']['data'].push({
           name: this.data['formParsed'].groupname,
-          icon: this.data['formParsed'].icon
+          icon: this.data['formParsed'].icon,
+          devices: []
         })
         this._data.SubjView.next('devices');
       } else {
@@ -127,6 +129,13 @@ export class ManageGroupsComponent
   cleanInputError():void {
     (<HTMLInputElement>document.querySelector('.form-input')).value = '';
     (<HTMLInputElement>document.querySelector('.form-input')).className += ' input-placeholder';
+  }
+
+  selectGroup(groupIndex:number):void {
+    this.data['name'] = this.data['data'][groupIndex]['name'];
+    this.data['icon'] = this.data['data'][groupIndex]['icon'];
+    this.data['index'] = groupIndex;
+    this.data['view'] = 'modifyGroup';
   }
 
   changeGroupView(view:string) {

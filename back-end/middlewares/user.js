@@ -46,14 +46,15 @@ const loginUser = (req, res)=> {
                                     count: attempts['req.user.username'].count -1
                                 } 
                             }
-                            bcrypt.compare(req.body.password, data.password, (err, data)=>{
+                            bcrypt.compare(req.body.password, data.password, (err, dataBcrypt)=>{
                                 if(err) throw err;
-                                if(data){
+                                if(dataBcrypt){
                                     attempts['req.user.username'] = {
                                         count: 0
                                     }
                                     const token = jwt.sign({username: req.body.username}, secret);
-                                    res.cookie('auth', token, { expires: new Date(Date.now() + 1000 * 3600 * 24 * 365), sameSite:'strict' }).send({login: true});
+                                    res.cookie('auth', token, { expires: new Date(Date.now() + 1000 * 3600 * 24 * 365) })
+                                       .cookie('role', data.role, { expires: new Date(Date.now() + 1000 * 3600 * 24 * 365) }).send({login: true});
                                 } else {
                                     attempts['req.user.username'] = {
                                         count: attempts['req.user.username'].count +1,
@@ -153,9 +154,10 @@ const newUser = (req, res)=> {
 
 
 const modifyUser = (req, res)=> {
+    const hash = bcrypt.hashSync(req.body.password, 11);
     userModel.findOneAndUpdate({ username: req.body.username }, {
         username: req.body.username,
-        password: req.body.password,
+        password: hash,
         role: req.body.role
     }, (err, data)=>{
         if(err) {

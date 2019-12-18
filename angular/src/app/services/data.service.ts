@@ -26,14 +26,9 @@ export class DataService
   SubjDeleteDevice:Subject<object>;;
   SubjSocketGetDataEvent:Subject<object>;
   SubjSocketChangeStateEvent:Subject<object>;
+  SubjSocketStats:Subject<object>;
 
   constructor() {
-    // this.sokect = 'https://hal9000.evils.in:3000';
-    // this.endpoint = 'https://hal9000.evils.in:3000/';
-
-    // this.socket = 'http://localhost:3000';
-    // this.endpoint = 'http://localhost:3000/';
-
     this.socket = 'https://192.168.10.10:3000/';
     this.endpoint = 'https://192.168.10.10:3000/';
 
@@ -58,5 +53,6 @@ export class DataService
     this.SubjDeleteDevice = new Subject<object>();
     this.SubjSocketGetDataEvent = new Subject<object>();
     this.SubjSocketChangeStateEvent = new Subject<object>();
+    this.SubjSocketStats = new Subject<object>();
   }
 }

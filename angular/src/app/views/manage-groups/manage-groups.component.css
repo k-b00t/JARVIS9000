@@ -1,4 +1,27 @@
+.groups-container {
+    height: 35vh;
+    overflow-y: scroll;
+}
+
+.row-groups {
+    width:90%;
+    margin:auto;
+}
+
 .form-group {
-    position: relative;
-    top: 30vh;
+    position: fixed;
+    width:100%;
+    bottom: 1vh;
+    color: #c00;
+    background-color: #000;
+}
+
+.icon-container-group {
+    width: 80px;
+    margin: 5% 0;
+    padding: 10px 0;
+    color: #ccc;
+    background-color: #222;
+    text-align: center;
+    border-radius: 5px;
 }

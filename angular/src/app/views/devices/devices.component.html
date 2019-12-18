@@ -3,7 +3,7 @@
         <div class='group-icons'>
             <div *ngFor='let group of data.data; let i=index'>
                 <input [(ngModel)]='data["selectedGroup"]' type="radio" name="group" value='{{i}}' id="group{{i}}">
-                <label  (click)='changeGroup(i)' for="group{{i}}" class='icon-container'>
+                <label  (click)='changeGroup(i)' for="group{{i}}" class='icon-container icon-container-column'>
                     <fa-icon *ngIf='group.icon === "faTv"' [icon]='faTv'></fa-icon>
                     <fa-icon *ngIf='group.icon === "faMailBulk"' [icon]='faMailBulk'></fa-icon>
                     <fa-icon *ngIf='group.icon === "faBed"' [icon]='faBed'></fa-icon>
@@ -16,15 +16,8 @@
                 </label>
             </div>
         </div>
-        <div class='new-item new-group'>
-            <fa-icon (click)='openModal(groupopt)' [icon]='faCog'></fa-icon>
-            <ng-template #groupopt let-modal>
-                <div class='custom-modal d-flex justify-content-around'>
-                    <fa-icon (click)="modal.dismiss('')" [icon]='faTimes' class='modal-close-icon d-flex justify-content-end'></fa-icon>
-                    <button (click)='newGroup("manageGroups")' class='btn-sm btn-form'>New Group</button>
-                    <button (click)='modifyGroup("manageGroups")' class='btn-sm btn-form'>Modify</button>
-                </div>
-            </ng-template>
+        <div *ngIf='data.role === "admin"' class='new-item new-group'>
+            <fa-icon (click)='manageGroup("manageGroups")' [icon]='faCog'></fa-icon>
         </div>
     </div>
 
@@ -47,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class='new-device d-flex justify-content-center' (click)='newDevice("manageDevices")'>
+        <div  *ngIf='data.role === "admin"' class='new-device d-flex justify-content-center' (click)='newDevice("manageDevices")'>
             <fa-icon [icon]='faPlus' class='mx-2'></fa-icon>
             <h6>Manage Device</h6>
         </div>

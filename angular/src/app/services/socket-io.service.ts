@@ -18,6 +18,9 @@ export class SocketIoService
     this.socket.on('changeState', (data:any)=>{
       this._data.SubjSocketChangeStateEvent.next(data);
     })
+    this.socket.on('getStats', (data:any)=>{
+      this._data.SubjSocketStats.next(data);
+    })
   }
 
 

@@ -1,6 +1,7 @@
 'use strict';
 
 const net = require('net');
+const stats = require('../functions/stats');
 
 module.exports = (socket)=>{
     let buffer = new Object;
@@ -48,5 +49,9 @@ module.exports = (socket)=>{
         })
         tcp.on('error', (err)=>{ })
     })
+    setInterval(()=>{
+        stats();
+    }, 1000)
+
     socket.on('disconnect', ()=> {})
 }

@@ -1,7 +1,8 @@
 .new-item {
     color: #c00;
     font-size: 1.5em;
-    margin: auto 10px auto 0;
+    padding-right: 5%;
+    margin: auto 0 auto 0;
 }
 
 .stats {
@@ -11,4 +12,13 @@
 
 .info {
     width: 80%;
+    padding-left:5%;
+    margin: auto 0 auto 0;
+    color: #aaa;
+}
+
+.info small {
+    display: block;
+    margin: 0;
+    font-weight: bold;
 }

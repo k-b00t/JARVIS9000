@@ -1,5 +1,6 @@
 'use strict';
 
+const cors = require('cors');
 const helmet = require('helmet');
 const jwt = require('./middlewares/jwt');
 const router = require('./routing/router');
@@ -28,6 +29,7 @@ global.io = io.on('connection', socket);
 mongodb.connect();
 mongodb.testAdminUser();
 
+app.use(cors({origin: 'https://192.168.10.10'}));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());

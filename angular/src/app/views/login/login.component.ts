@@ -39,7 +39,6 @@ export class LoginComponent
           }
         }
       } else if(data['error'] === 'maxTry'){
-        console.log( data['message'])
         this.data['nextLogin'] = ((data['message'] - Date.now()) / 1000).toFixed(0);
         this.data['view'] = 'maxAttempts';
         this.countDown();

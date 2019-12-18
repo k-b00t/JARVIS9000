@@ -19,25 +19,31 @@ export class HomeComponent
   subsData:Subscription;
   subsView:Subscription;
   subsStatus:Subscription;
-  data:object;
+  
+  data:any;
 
 
   constructor(private _data:DataService, private _functions:FunctionsService) {
     this.faUserCog = faUserCog;
     this.faHome = faHome;
+    this._data['data']['role'] = document.cookie.split('role=')[1];
     this.data = {
-      view: ''
+      view: '',
+      stats: {},
+      role: this._data['data']['role']
     }
     this.subsView = this._data.SubjView.subscribe((data:string)=>{
       this.data['view'] = data;
     })
     this.subsData  = this._data.SubjData.subscribe((data:any)=>{
       this._data['data']['data'] = data;
-      this.data = {
-        view: 'devices'
-      }
+      this.data['view'] = 'devices';
+    })
+    this.subsStatus = this._data.SubjSocketStats.subscribe((data:any)=>{
+      this.data['stats'] = data;
     })
     this._functions.ajaxHttp(`${this._data.endpoint}groups`, 'get', null);
+
   }
 
 

@@ -59,8 +59,6 @@ input[type='radio']:checked + .icon-container {
 }
 
 .icon-container {
-    display: flex;
-    flex-direction: column;
     margin: auto;
     margin: .8vh 1%;
     padding: 8% 3%;
@@ -68,6 +66,11 @@ input[type='radio']:checked + .icon-container {
     background-color: transparent;
     text-align: center;
     border-radius: 0;
+}
+
+.icon-container-column {
+    display: flex;
+    flex-direction: column;
 }
 
 .custom-modal {

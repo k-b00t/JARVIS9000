@@ -44,7 +44,6 @@ const newDevice = (req, res)=>{
 }
 
 const modifyDevice = (req, res)=>{
-    console.log(req.body)
     devicesModel.findByIdAndUpdate(req.body.id, {
         name: req.body['name'],
         icon: req.body['icon'],

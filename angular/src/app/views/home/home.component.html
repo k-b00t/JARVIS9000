@@ -1,9 +1,12 @@
 <div class='stats d-flex justify-content-between'>
     <div class='info'>
-
+        <small>CPU: {{data.stats['cpu']}}%</small>
+        <small>RAM: {{data.stats['ram']}}%</small>
     </div>
-    <fa-icon (click)='manageView("manageUsers")' *ngIf='data["view"] === "devices"' [icon]='faUserCog' class='new-item'></fa-icon>
-    <fa-icon (click)='manageView("devices")' *ngIf='data["view"] !== "devices"' [icon]='faHome' class='new-item'></fa-icon>
+    <div *ngIf='data.role === "admin"' class='new-item'>
+        <fa-icon (click)='manageView("manageUsers")' *ngIf='data["view"] === "devices"' [icon]='faUserCog'></fa-icon>
+        <fa-icon (click)='manageView("devices")' *ngIf='data["view"] !== "devices"' [icon]='faHome'></fa-icon>
+    </div>
 </div>
 
 <app-devices *ngIf='data["view"] === "devices"'></app-devices>

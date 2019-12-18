@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 
 import { DataService } from 'src/app/services/data.service';
@@ -45,14 +44,12 @@ export class DevicesComponent
   faCoffee:IconDefinition;
   faHdd:IconDefinition;
 
-  modalOptions:NgbModalOptions;
-
   SubsSocketGetDataEvent:Subscription;
   SubsSocketChangeStateEvent:Subscription;
 
   data:any;
 
-  constructor(private _data:DataService, private _functions:FunctionsService, private modalService: NgbModal, private _socket:SocketIoService) {
+  constructor(private _data:DataService, private _functions:FunctionsService, private _socket:SocketIoService) {
     this.faPlus = faPlus;
     this.faBed = faBed;
     this.faSignature = faSignature;
@@ -76,15 +73,13 @@ export class DevicesComponent
     this.data = {
       checked: true,
       state: {},
-      data: this._data['data']['data']
+      data: this._data['data']['data'],
+      role: this._data['data']['role']
     }
     if(!this.data['selectedGroup'] && this.data['data'] !== []) {
-      this.data['selectedGroup'] = this._data['data']['selectedGroup'] || '0';
-    }
-    this.modalOptions = {
-        backdrop:'static',
-        backdropClass:'customBackdrop',
-        centered: true
+      (this.data['data'][this._data['data']['selectedGroup']])
+        ? this.data['selectedGroup'] = this._data['data']['selectedGroup']
+        : this.data['selectedGroup'] = '0';
     }
     this.SubsSocketGetDataEvent = this._data.SubjSocketGetDataEvent.subscribe((data:object)=>{
       data['command'].forEach((d:any)=>{
@@ -124,33 +119,17 @@ export class DevicesComponent
     })
   }
 
-  openModal(content) {
-    this.modalService.open(content, this.modalOptions)
-      .result.then((result) => {}, (reason) => {}
-    )
-  }
-
   changeGroup(index:number) {
     this.data['selectedGroup'] = index.toString();
     this.getDeviceState();
     this._socket.getDataEmit(this.data['state']);
   }
 
-  newGroup(view:string):void {
-    this.modalService.dismissAll();
+  manageGroup(view:string):void {
     this._data['data']['index'] = null;
     this._data['data']['view'] = 'newGroup';
     this._data['data']['title'] = 'New Group';
-    this._data['data']['selectedGroup'] = this.data['selectedGroup'];
-    this._functions.manageView(view);
-  }
-
-  modifyGroup(view:string):void {
-    this.modalService.dismissAll();
-    this._data['data']['index'] = parseInt(this.data['selectedGroup']);
-    this._data['data']['view'] = 'modifyGroup';
-    this._data['data']['title'] = 'Modify Group';
-    this._data['data']['selectedGroup'] = this.data['selectedGroup'];
+    this._data['data']['selectedGroup'] = null;
     this._functions.manageView(view);
   }
 

@@ -1,7 +1,9 @@
 'use strict';
 
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 const checkerJwt = require('express-jwt');
+const userModel = require('../databases/mongodb').userModel;
 
 const secret = JSON.parse( fs.readFileSync('./secrets.json') ).jwt
 
@@ -19,5 +21,16 @@ module.exports = {
             console.log({err: 'invalid token...'})
             res.send({err: 'Invalid token'});
         }
+    }
+    ,
+    testRole: (req, res, next)=> {
+        const username = jwt.verify(req.cookies['auth'], secret).username;
+        userModel.findOne({username: username}, (err, data)=>{
+            if(data['role'] === 'admin'){
+                next();
+            } else {
+                res.send({error: false});
+            }
+        })
     }
 }

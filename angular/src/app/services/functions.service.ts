@@ -170,7 +170,6 @@ export class FunctionsService
           break;
       }
     }  else if(data['modifyDevice'] !== undefined) {
-      console.log(data)
       switch(data['modifyDevice']) {
         case(true):
           this._data.SubjModifyDevice.next({
