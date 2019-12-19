@@ -29,8 +29,8 @@ export class DataService
   SubjSocketStats:Subject<object>;
 
   constructor() {
-    this.socket = 'https://192.168.10.10:3000/';
-    this.endpoint = 'https://192.168.10.10:3000/';
+    this.socket = 'https://192.168.43.10:3000/';
+    this.endpoint = 'https://192.168.43.10:3000/';
 
     this.data = {
       view: '',

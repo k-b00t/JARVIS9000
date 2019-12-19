@@ -29,7 +29,7 @@ global.io = io.on('connection', socket);
 mongodb.connect();
 mongodb.testAdminUser();
 
-app.use(cors({origin: 'https://192.168.10.10'}));
+app.use(cors({origin: 'https://192.168.43.10'}));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
