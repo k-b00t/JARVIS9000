@@ -4,7 +4,7 @@ Jarvis9000 is a home automation application for controlling ESP8266 devices, (co
 The app allows you to set the role of admin and user to restrict the managment of users, groups and devices.
 You can create new groups (roms) to add devices, for remote control and task automation.
 
-![]('https://github.com/k-b00t/99-final-project/tree/master/screenshoot/screenshoot.png')
+![](https://github.com/k-b00t/99-final-project/blob/master/screenshoot/screenshoot.png)
 
 ## How to use:
 
@@ -42,4 +42,4 @@ To be able to use it is your environment, it is necessary to change the enpoint 
 
 ## Copyright y license
 
-[The license is MIT type, you can check it here]('https://github.com/k-b00t/99-final-project/blob/master/License.txt')
+[The license is MIT type, you can check it here](https://github.com/k-b00t/99-final-project/blob/master/License.txt)
