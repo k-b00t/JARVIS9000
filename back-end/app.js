@@ -20,6 +20,10 @@ const cert = {
     key: fs.readFileSync('../certs/privkey.pem'),
     cert: fs.readFileSync('../certs/fullchain.pem')
 }
+const corsOpt = {
+    credentials: true,
+    origin: 'https://192.168.43.10'
+}
 
 const app = express();
 const api = https.createServer(cert, app)
@@ -29,7 +33,7 @@ global.io = io.on('connection', socket);
 mongodb.connect();
 mongodb.testAdminUser();
 
-app.use(cors({origin: 'https://192.168.43.10'}));
+app.use(cors(corsOpt));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());

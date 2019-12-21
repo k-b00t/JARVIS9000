@@ -19,7 +19,8 @@ export class FunctionsService
       headers: new HttpHeaders({
         'x-requested-with': 'XMLHttpResponse',
         'Content-Type': 'application/json'
-      })
+      }),
+      withCredentials: true
     }
   }
 

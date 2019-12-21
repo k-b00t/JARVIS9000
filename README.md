@@ -42,4 +42,4 @@ To be able to use it is your environment, it is necessary to change the enpoint 
 
 ## Copyright y license
 
-[The license is MIT type, you can check it here](https://github.com/k-b00t/99-final-project/blob/master/License.txt)
+[The license is GLP type, you can check it here](https://github.com/k-b00t/99-final-project/blob/master/License.txt)

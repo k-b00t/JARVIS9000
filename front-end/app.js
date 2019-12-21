@@ -9,7 +9,7 @@ const app = express();
 
 
 http.createServer((req, res)=>{
-    res.writeHead(301, {Location: 'https://192.168.43.10:443/'});
+    res.writeHead(301, {Location: 'https://jarvis9000.org:443/'});
     res.end();
 }).listen(80, ()=>{
     console.log('\nNode0:80     status: connected');
