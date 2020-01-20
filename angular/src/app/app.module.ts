@@ -18,6 +18,8 @@ import { ManageUsersComponent } from './views/manage-users/manage-users.componen
 import { ManageGroupsComponent } from './views/manage-groups/manage-groups.component';
 import { ManageDevicesComponent } from './views/manage-devices/manage-devices.component';
 import { SocketIoService } from './services/socket-io.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -37,7 +39,8 @@ import { SocketIoService } from './services/socket-io.service';
     FontAwesomeModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     DataService,

@@ -4,7 +4,7 @@ import { FunctionsService } from 'src/app/services/functions.service';
 import { Subscription } from 'rxjs';
 
 
-import { faHeadphonesAlt, faCoffee, faHdd,
+import { faNetworkWired, faHeadphonesAlt, faCoffee, faHdd,
   faLightbulb, faTv, faPlug, faWindowMaximize, faFan,
   faTerminal, faSignature, faSatelliteDish, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,6 +16,7 @@ import { faHeadphonesAlt, faCoffee, faHdd,
 })
 export class ManageDevicesComponent
 {
+  faNetworkWired:IconDefinition;
   faSignature:IconDefinition;
   faSatelliteDish:IconDefinition;
   faTerminal:IconDefinition;
@@ -35,6 +36,7 @@ export class ManageDevicesComponent
   data: any;
 
   constructor(private _data:DataService, private _functions:FunctionsService) {
+    this.faNetworkWired = faNetworkWired;
     this.faSignature = faSignature;
     this.faSatelliteDish = faSatelliteDish;
     this.faTerminal = faTerminal;
@@ -58,6 +60,7 @@ export class ManageDevicesComponent
     this.data["name"] = '',
     this.data["ip"] = '',
     this.data["icon"] = '',
+    this.data["protocol"] = 'tcp',
     this.data["command"] = '',
     this.subsNewDevice = this._data.SubjNewDevice.subscribe((data:any)=>{
       this._data['data']['data'][this._data['data']['selectedGroup']]['devices'].push(data['data']);
@@ -110,6 +113,7 @@ export class ManageDevicesComponent
           icon: form['form']['value']['icon'],
           ip: form['form']['value']['ip'],
           command: form['form']['value']['command'],
+          protocol: form['form']['value']['protocol'],
           selector: `ip${form['form']['value']['ip'].replace(/\./g, '')}com${form['form']['value']['command']}`
         }
         this._functions.ajaxHttp(`${this._data.endpoint}devices`, 'post', this.data['formParsed']);
@@ -121,6 +125,7 @@ export class ManageDevicesComponent
           icon: form['form']['value']['icon'],
           ip: form['form']['value']['ip'],
           command: form['form']['value']['command'],
+          protocol: form['form']['value']['protocol'],
           selector: `ip${form['form']['value']['ip'].replace(/\./g, '')}com${form['form']['value']['command']}`
         }
         this._functions.ajaxHttp(`${this._data.endpoint}devices`, 'put', this.data['formParsed']);
@@ -181,6 +186,7 @@ export class ManageDevicesComponent
     this.data["ip"] = device['ip'];
     this.data["icon"] = device['icon'];
     this.data["command"] = device["command"];
+    this.data['protocol'] = device["protocol"];
     this.data['view'] = 'modifyDevice';
   }
 

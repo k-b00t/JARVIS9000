@@ -20,9 +20,8 @@
             <fa-icon (click)='manageGroup("manageGroups")' [icon]='faCog'></fa-icon>
         </div>
     </div>
-
     <div class='devices'>
-        <div *ngIf='data["data"][data["selectedGroup"]]["devices"]'>
+        <div *ngIf='data["data"][0]'>
             <div *ngFor='let device of data["data"][data["selectedGroup"]]["devices"]'>
                 <div (click)='sendCommand(device)'  class='device d-flex justify-content-between'>
                     <div class='d-flex flex-row'>
@@ -39,10 +38,10 @@
                     <small class='my-auto'>{{ device.ip }}</small>
                 </div>
             </div>
-        </div>
-        <div  *ngIf='data.role === "admin"' class='new-device d-flex justify-content-center' (click)='newDevice("manageDevices")'>
-            <fa-icon [icon]='faPlus' class='mx-2'></fa-icon>
-            <h6>Manage Device</h6>
+            <div  *ngIf='data.role === "admin"' class='new-device d-flex justify-content-center' (click)='newDevice("manageDevices")'>
+                <fa-icon [icon]='faPlus' class='mx-2'></fa-icon>
+                <h6>Manage Device</h6>
+            </div>
         </div>
     </div>
 </div>

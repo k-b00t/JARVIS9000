@@ -12,9 +12,17 @@
 
 }
 
-
 .form-group {
     position: fixed;
     bottom: 1vh;
     width:100%;
+}
+
+.icon-device-group {
+    margin-top: 3vh;
+}
+
+
+.icon-device-group h6 {
+    margin-left: 6%;
 }

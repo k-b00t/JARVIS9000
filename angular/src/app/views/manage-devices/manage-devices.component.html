@@ -33,7 +33,17 @@
         <fa-icon [icon]='faTerminal' class='icon-form'></fa-icon>
         <input (click)='cleanInput()' [(ngModel)]='data["command"]' #command='ngModel' name='command' class='form-input' id='command' type="text" placeholder='{{data["placeholder"].command}}'>
     </div>
-    <div class='icon-group'>
+    <div class='row-input d-flex flex-row'>
+        <fa-icon [icon]='faNetworkWired' class='icon-form'></fa-icon>
+        <div class='d-flex flex-row mx-auto'>
+            <input [(ngModel)]='data["protocol"]' type="radio" name='protocol' value='tcp' class='' id='tcp'>
+            <label for='tcp' class='icon-container'>TCP</label>
+
+            <input [(ngModel)]='data["protocol"]' type="radio" name='protocol' value='udp' class='' id='udp'>
+            <label for='udp' class='icon-container'>UDP</label>
+        </div>
+    </div>
+    <div class='icon-device-group'>
         <h6 class='text-light'>Select icon:</h6>
         <div class='col-12 d-flex justify-content-center'>
             <input [(ngModel)]='data["icon"]' type="radio" name="icon" value='faLightbulb' class='radio-group' id='faLightbulb'>
@@ -80,7 +90,7 @@
             </label>
         </div>
     </div>
-    <button *ngIf='data["view"] === "newDevice"' class='btn-submit' type="submit" style='width: 40%;'>Save</button>
+    <button *ngIf='data["view"] === "newDevice"' class='btn-submit' type="submit" style="width: 40%;">Save</button>
     <div *ngIf='data["view"] === "modifyDevice"' class='d-flex justify-content-around'>
         <button (click)='changeView("confirmDelete")' type='button' class='btn-sm btn-form'>Delete</button>
         <button type='submit' class='btn-sm btn-form'>Modify</button>

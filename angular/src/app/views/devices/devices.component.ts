@@ -76,6 +76,7 @@ export class DevicesComponent
       data: this._data['data']['data'],
       role: this._data['data']['role']
     }
+
     if(!this.data['selectedGroup'] && this.data['data'] !== []) {
       (this.data['data'][this._data['data']['selectedGroup']])
         ? this.data['selectedGroup'] = this._data['data']['selectedGroup']
@@ -103,15 +104,21 @@ export class DevicesComponent
 
 
   getDeviceState():void {
-    this.data['state'] = {};
-    this.data["data"][this.data["selectedGroup"]]["devices"].forEach((d:object)=> {
-      if(!this.data['state'][d['ip']]) {
-        this.data['state'][d['ip']] = [d['command']];
-      } else {
-        this.data['state'][d['ip']].push(d['command']);
-      }
-    })
+    if(this.data['data'].length !== 0) {
+      this.data['state'] = {};
+      this.data["data"][this.data["selectedGroup"]]["devices"].forEach((d:object)=> {
+        if(!this.data['state'][d['ip']]) {
+          this.data['state'][d['ip']] =  {
+            command: [d['command']],
+            protocol: d['protocol']
+          }
+        } else {
+          this.data['state'][d['ip']]['command'].push(d['command']);
+        }
+      })
+    }
   }
+
 
   setDeviceState(data:object):any {
     data['data'].forEach(d=>{
@@ -141,9 +148,21 @@ export class DevicesComponent
   }
 
   sendCommand(device:object):void {
+    
+    /* device:
+          _id: "5e19b0abb0e43c30c18807da"
+          name: "LUZ"
+          icon: "faLightbulb"
+          ip: "10.10.0.10"
+          command: "LUZ00"
+          protocol: "udp"
+          selector: "ip1010010comLUZ00"
+    */
+
     const data = {
       ip: device['ip'],
       command: device['command'],
+      protocol: device['protocol'],
       selector: device['selector']
     }
     this._socket.changeStateEmit(data);

@@ -43,7 +43,6 @@ export class HomeComponent
       this.data['stats'] = data;
     })
     this._functions.ajaxHttp(`${this._data.endpoint}groups`, 'get', null);
-
   }
 
 
